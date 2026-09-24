@@ -1,0 +1,22 @@
+{
+  "appId": "com.tugasku.app",
+  "appName": "TugasKu",
+  "webDir": "www",
+  "bundledWebRuntime": false,
+  "backgroundColor": "#1F2A5C",
+  "android": {
+    "backgroundColor": "#1F2A5C"
+  },
+  "plugins": {
+    "LocalNotifications": {
+      "smallIcon": "ic_stat_notify",
+      "iconColor": "#FFD84D",
+      "sound": "default"
+    },
+    "SplashScreen": {
+      "launchShowDuration": 800,
+      "backgroundColor": "#1F2A5C",
+      "showSpinner": false
+    }
+  }
+}

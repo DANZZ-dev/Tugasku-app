@@ -1,0 +1,20 @@
+{
+  "name": "tugasku",
+  "version": "1.0.0",
+  "description": "TugasKu - Pengingat tugas dengan notifikasi native Android",
+  "private": true,
+  "scripts": {
+    "sync": "npx cap sync android",
+    "open": "npx cap open android",
+    "build-apk": "cd android && ./gradlew assembleDebug",
+    "build-apk-release": "cd android && ./gradlew assembleRelease"
+  },
+  "dependencies": {
+    "@capacitor/android": "^6.1.2",
+    "@capacitor/core": "^6.1.2",
+    "@capacitor/local-notifications": "^6.1.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^6.1.2"
+  }
+}
