@@ -540,13 +540,22 @@ input:focus{border-color:var(--ink)}
     notified.clear(); localStorage.setItem(KEY+'.notified', '[]');
     closeSet(); toast('Pengaturan disimpan'); scheduleNotifs();
   });
-  $('#sTest').addEventListener('click', ()=>{
-    if (!('Notification' in window)) { toast('Browser ini tidak mendukung notifikasi'); return; }
-    if (Notification.permission === 'denied'){ toast('Izin notifikasi diblokir di pengaturan browser'); return; }
-    Notification.requestPermission().then(p=>{
-      if (p === 'granted'){ notify('Notifikasi berhasil', 'Pengingat tugasmu akan tampil seperti ini.', 'test'); toast('Notifikasi percobaan terkirim'); }
-      else toast('Izin notifikasi belum diberikan');
-    });
+  $('#sTest').addEventListener('click', async ()=>{
+    const ln = window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.LocalNotifications;
+    if (!ln) { toast('Fitur notifikasi belum siap, coba lagi sebentar'); return; }
+    try {
+      let perm = await ln.checkPermissions();
+      if (perm.display !== 'granted') perm = await ln.requestPermissions();
+      if (perm.display !== 'granted') { toast('Izin notifikasi belum diberikan'); return; }
+      await ln.schedule({ notifications: [{
+        id: 999999,
+        title: 'Notifikasi berhasil',
+        body: 'Pengingat tugasmu akan tampil seperti ini.',
+        schedule: { at: new Date(Date.now() + 2000) },
+        channelId: 'tugasku-reminders'
+      }]});
+      toast('Notifikasi percobaan akan muncul dalam 2 detik');
+    } catch(e){ toast('Gagal mengirim notifikasi percobaan'); }
   });
 
   // ---------- Notifikasi pengingat (native Android, tetap jalan walau app ditutup) ----------
